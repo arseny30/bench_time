@@ -6,11 +6,12 @@
 
 #include "precise-time.h"
 
+#define TN 4
 static void BM_StringCreation(benchmark::State &state) {
   for (auto _ : state)
     std::string empty_string;
 }
-BENCHMARK(BM_StringCreation);
+BENCHMARK(BM_StringCreation)->Threads(TN);
 
 static void BM_chrono_steady_clock(benchmark::State &state) {
   for (auto _ : state) {
@@ -20,7 +21,7 @@ static void BM_chrono_steady_clock(benchmark::State &state) {
     benchmark::DoNotOptimize(nano);
   }
 }
-BENCHMARK(BM_chrono_steady_clock);
+BENCHMARK(BM_chrono_steady_clock)->Threads(TN);
 
 static void BM_chrono_system_clock(benchmark::State &state) {
   for (auto _ : state) {
@@ -30,7 +31,7 @@ static void BM_chrono_system_clock(benchmark::State &state) {
     benchmark::DoNotOptimize(nano);
   }
 }
-BENCHMARK(BM_chrono_system_clock);
+BENCHMARK(BM_chrono_system_clock)->Threads(TN);
 
 static void BM_abseil_now(benchmark::State &state) {
   for (auto _ : state) {
@@ -38,7 +39,7 @@ static void BM_abseil_now(benchmark::State &state) {
     benchmark::DoNotOptimize(nano);
   }
 }
-BENCHMARK(BM_abseil_now);
+BENCHMARK(BM_abseil_now)->Threads(TN);
 
 static void BM_get_utime_monotonic(benchmark::State &state) {
   for (auto _ : state) {
@@ -46,7 +47,7 @@ static void BM_get_utime_monotonic(benchmark::State &state) {
     benchmark::DoNotOptimize(nano);
   }
 }
-BENCHMARK(BM_get_utime_monotonic);
+BENCHMARK(BM_get_utime_monotonic)->Threads(TN);
 
 static void BM_get_double_time(benchmark::State &state) {
   for (auto _ : state) {
@@ -54,7 +55,7 @@ static void BM_get_double_time(benchmark::State &state) {
     benchmark::DoNotOptimize(nano);
   }
 }
-BENCHMARK(BM_get_double_time);
+BENCHMARK(BM_get_double_time)->Threads(TN);
 
 static void BM_get_precise_time_1000000(benchmark::State &state) {
   for (auto _ : state) {
@@ -62,6 +63,6 @@ static void BM_get_precise_time_1000000(benchmark::State &state) {
     benchmark::DoNotOptimize(nano);
   }
 }
-BENCHMARK(BM_get_precise_time_1000000);
+BENCHMARK(BM_get_precise_time_1000000)->Threads(TN);
 
 BENCHMARK_MAIN();
