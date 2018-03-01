@@ -14,7 +14,7 @@ long long precise_time_rdtsc;
 
 double get_utime_monotonic(void) {
   struct timespec T;
-  assert(clock_gettime(CLOCK_MONOTONIC, &T) >= 0);
+  clock_gettime(CLOCK_MONOTONIC, &T);
   precise_now_rdtsc = rdtsc();
   return precise_now = (double)T.tv_sec + (double)T.tv_nsec * 1e-9;
 }
@@ -35,7 +35,7 @@ double get_double_time(void) {
 
 double get_utime(int clock_id) {
   struct timespec T;
-  assert(clock_gettime(clock_id, &T) >= 0);
+  clock_gettime(clock_id, &T);
   double res = (double)T.tv_sec + (double)T.tv_nsec * 1e-9;
   if (clock_id == CLOCK_REALTIME) {
     precise_time = (long long)(res * (1LL << 32));
