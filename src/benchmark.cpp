@@ -1,6 +1,7 @@
 #include <absl/time/clock.h>
 #include <benchmark/benchmark.h>
 #include <td/utils/port/Clocks.h>
+#include <td/utils/Time.h>
 
 #include <chrono>
 
@@ -16,8 +17,7 @@ BENCHMARK(BM_StringCreation)->Threads(TN);
 static void BM_chrono_steady_clock(benchmark::State &state) {
   for (auto _ : state) {
     auto duration = std::chrono::steady_clock::now().time_since_epoch();
-    auto nano =
-        std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
+    auto nano = std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
     benchmark::DoNotOptimize(nano);
   }
 }
@@ -26,8 +26,7 @@ BENCHMARK(BM_chrono_steady_clock)->Threads(TN);
 static void BM_chrono_system_clock(benchmark::State &state) {
   for (auto _ : state) {
     auto duration = std::chrono::system_clock::now().time_since_epoch();
-    auto nano =
-        std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
+    auto nano = std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
     benchmark::DoNotOptimize(nano);
   }
 }
@@ -64,5 +63,21 @@ static void BM_get_precise_time_1000000(benchmark::State &state) {
   }
 }
 BENCHMARK(BM_get_precise_time_1000000)->Threads(TN);
+
+static void BM_td_now_cached(benchmark::State &state) {
+  for (auto _ : state) {
+    auto nano = td::Time::now_cached();
+    benchmark::DoNotOptimize(nano);
+  }
+}
+BENCHMARK(BM_td_now_cached)->Threads(TN);
+
+static void BM_td_now(benchmark::State &state) {
+  for (auto _ : state) {
+    auto nano = td::Time::now();
+    benchmark::DoNotOptimize(nano);
+  }
+}
+BENCHMARK(BM_td_now)->Threads(TN);
 
 BENCHMARK_MAIN();
