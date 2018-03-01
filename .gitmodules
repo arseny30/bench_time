@@ -1,0 +1,12 @@
+[submodule "abseil-cpp"]
+	path = abseil-cpp
+	url = https://github.com/abseil/abseil-cpp.git
+[submodule "tdutils"]
+	path = tdutils
+	url = https://github.com/arseny30/tdutils.git
+[submodule "cctz"]
+	path = cctz
+	url = https://github.com/google/cctz.git
+[submodule "benchmark"]
+	path = benchmark
+	url = https://github.com/google/benchmark.git
